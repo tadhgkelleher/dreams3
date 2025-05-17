@@ -29,6 +29,9 @@
       max-width: 400px;
       line-height: 1.6;
       color: #e0e0ff; /* Lighter text */
+      /* Ensure the div is still visible even if empty for potential future use */
+      min-height: 20px; /* Or some other small value if you want it to fully collapse */
+      min-width: 20px;  /* Or some other small value */
     }
     #info h1 {
       margin-top: 0;
@@ -47,9 +50,7 @@
 </head>
 <body>
   <div id="info">
-    <h1>Hyper-Dimensional Singularity Nexus</h1>
-    <p>Behold! The <strong>NEXUS OMEGA</strong>, the ultimate convergence point of all realities, where every singularity merges into the <strong>HYPER-SOUL</strong> of the cosmos. These are its infinitely complex, incandescent pathways.</p>
-    <p><strong>DRAG</strong> to navigate the abyss. <strong>SCROLL</strong> to transcend scale. <strong>WITNESS</strong> the chaotic symphony of creation's core.</p>
+    <!-- Text content removed as requested -->
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
