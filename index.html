@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Supercharged Cosmic Root Network</title>
+  <title>Hyper-Dimensional Singularity Nexus</title>
   <style>
     body, html {
       margin: 0;
@@ -11,7 +11,6 @@
       overflow: hidden;
       background-color: #000000;
       color: white;
-      font-family: 'Courier New', Courier, monospace;
     }
     canvas {
       display: block;
@@ -20,93 +19,43 @@
       position: absolute;
       top: 15px;
       left: 15px;
-      background: rgba(10, 0, 20, 0.9);
+      font-family: 'Courier New', Courier, monospace;
+      background: rgba(0, 5, 15, 0.88); /* Darker, more intense */
       padding: 20px;
       border-radius: 12px;
-      border: 1px solid rgba(128, 0, 255, 0.8);
-      box-shadow: 0 0 25px rgba(128, 0, 255, 0.7);
+      border: 1px solid rgba(0, 192, 255, 0.75); /* Electric Blue border */
+      box-shadow: 0 0 25px rgba(0, 192, 255, 0.7), 0 0 10px rgba(255,0,255,0.5) inset; /* Dual shadow */
       font-size: 14px;
-      max-width: 90%;
-      width: 300px;
+      max-width: 400px;
       line-height: 1.6;
-      color: #f0f0f0;
-      transition: opacity 0.3s;
+      color: #e0e0ff; /* Lighter text */
     }
     #info h1 {
-      margin: 0 0 10px;
-      font-size: 1.5em;
-      color: #ff44ff;
-      text-shadow: 0 0 8px #ff44ff, 0 0 12px #ff00ff;
+      margin-top: 0;
+      font-size: 1.6em;
+      color: #ff00ff; /* Intense Magenta */
+      text-shadow: 0 0 8px #ff00ff, 0 0 12px #ff00aa, 0 0 5px #ffffff;
     }
     #info p {
-      margin: 0 0 8px;
+      margin-bottom: 0.8em;
     }
     #info strong {
-      color: #00ddff;
-      text-shadow: 0 0 6px #00ddff;
-    }
-    #controls {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      padding: 10px;
-      background: rgba(10, 0, 20, 0.9);
-      border-radius: 8px;
-      border: 1px solid rgba(128, 0, 255, 0.8);
-    }
-    #controls button {
-      padding: 8px 12px;
-      background: #ff44ff;
-      border: none;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 12px;
-    }
-    #controls button:hover {
-      background: #ff66ff;
-    }
-    #loading {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 18px;
-      color: #ff44ff;
-      text-shadow: 0 0 10px #ff44ff;
-      display: none;
-    }
-    @media (max-width: 600px) {
-      #info {
-        font-size: 12px;
-        padding: 15px;
-        width: 80%;
-      }
-      #info h1 {
-        font-size: 1.2em;
-      }
-      #controls {
-        top: auto;
-        bottom: 15px;
-        right: 15px;
-      }
+        color: #00ffff; /* Electric Cyan */
+        text-shadow: 0 0 6px #00ffff, 0 0 10px #00ccee;
     }
   </style>
 </head>
 <body>
-  <div id="loading">Initializing Cosmic Network...</div>
   <div id="info">
-    <h1>Supercharged Cosmic Root Network</h1>
-    <p>All Singularities are One, interconnected through the <strong>Omni-Singularity</strong>. Visualize its energetic pathways.</p>
-    <p>Drag to rotate. Scroll to zoom. Toggle auto-rotation below.</p>
-  </div>
-  <div id="controls">
-    <button id="toggleRotation">Toggle Auto-Rotation</button>
+    <h1>Hyper-Dimensional Singularity Nexus</h1>
+    <p>Behold! The <strong>NEXUS OMEGA</strong>, the ultimate convergence point of all realities, where every singularity merges into the <strong>HYPER-SOUL</strong> of the cosmos. These are its infinitely complex, incandescent pathways.</p>
+    <p><strong>DRAG</strong> to navigate the abyss. <strong>SCROLL</strong> to transcend scale. <strong>WITNESS</strong> the chaotic symphony of creation's core.</p>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  
+  <!-- Post-processing scripts -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
@@ -114,485 +63,702 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
 
-  <script>
-    if (!window.THREE) {
-      alert('Failed to load Three.js. Please check your network connection.');
-      throw new Error('Three.js not loaded');
-    }
 
-    let scene, camera, renderer, controls, composer;
+  <script>
+    // --- God Rays Fake Shader (adapted for simple integration) ---
+    // Usually this shader works best with an occlusion map, but for simplicity,
+    // we'll apply it to the whole scene, centered on the root node.
+    const GodRaysFakeShader = {
+        uniforms: {
+            tDiffuse: { value: null },
+            fX: { value: 0.5 }, // Screen X of light source (0-1)
+            fY: { value: 0.5 }, // Screen Y of light source (0-1)
+            fExposure: { value: 0.35 }, // Lowered to avoid excessive blowout with bloom
+            fDecay: { value: 0.97 },
+            fDensity: { value: 0.98 },
+            fWeight: { value: 0.3 },
+            fClampMax: { value: 0.99 } // Max value for a ray sample
+        },
+        vertexShader: `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+            }`,
+        fragmentShader: `
+            varying vec2 vUv;
+            uniform sampler2D tDiffuse;
+            uniform float fX;
+            uniform float fY;
+            uniform float fExposure;
+            uniform float fDecay;
+            uniform float fDensity;
+            uniform float fWeight;
+            uniform float fClampMax;
+            const int NUM_SAMPLES = 30; // Performance hit: higher is better quality but slower
+
+            void main() {
+                vec2 texCoord = vUv;
+                vec2 lightDelta = vec2(fX, fY) - texCoord; // Vector from current pixel to light source
+                float dist = length(lightDelta);
+                lightDelta /= dist; // Normalize (direction to light)
+
+                vec4 sum = vec4(0.0);
+                float illuminationDecay = 1.0;
+                
+                // Samples are taken from current pixel towards the light source
+                for (int i = 0; i < NUM_SAMPLES; i++) {
+                    // Calculate offset for sampling: step along 'lightDelta'
+                    // The step size should decrease as we get further from the light source
+                    // or be a fraction of the total distance.
+                    // Simple step:
+                    vec2 sampleCoord = texCoord + lightDelta * dist * fDensity * float(i) / float(NUM_SAMPLES);
+                    
+                    // Prevent sampling outside screen bounds (crude clamp)
+                    if (sampleCoord.x < 0.0 || sampleCoord.x > 1.0 || sampleCoord.y < 0.0 || sampleCoord.y > 1.0) {
+                         // sum += vec4(0.0); // Or break, or continue
+                    } else {
+                        sum += texture2D(tDiffuse, sampleCoord) * illuminationDecay;
+                    }
+                    illuminationDecay *= fDecay;
+                }
+                
+                sum *= fExposure * fWeight;
+                sum = clamp(sum, 0.0, fClampMax); // Clamp individual ray contribution
+
+                // Additive blending with original scene color
+                gl_FragColor = texture2D(tDiffuse, vUv) + sum;
+            }`
+    };
+
+
+    let scene, camera, renderer, controls, composer, godRaysPass;
     let universe, rootNode, rootAura, starField, rootParticles;
     const blackHoles = [];
     const wormroots = [];
+    const interBHWormroots = [];
     const accretionDisks = [];
     const blackHoleData = [];
+    const bhJets = []; // For particle jets
+
     const clock = new THREE.Clock();
-    let isInitialized = false;
+    const rootNodeWorldPosition = new THREE.Vector3(); // For God Rays center
 
+    // --- HYPER-EXTREME CONFIGURATION ---
     const CONFIG = {
-      UNIVERSE_RADIUS: 8,
-      UNIVERSE_OPACITY: 0.12,
-      UNIVERSE_BASE_COLOR: new THREE.Color(0x05000F),
-      UNIVERSE_FRESNEL_COLOR: new THREE.Color(0x600090),
-      UNIVERSE_FRESNEL_POWER: 3.5,
-      UNIVERSE_NOISE_SCALE: 3.0,
+        UNIVERSE_RADIUS: 10, // Larger universe
+        UNIVERSE_OPACITY: 0.15,
+        UNIVERSE_BASE_COLOR: new THREE.Color(0x020008), // Even darker
+        UNIVERSE_FRESNEL_COLOR: new THREE.Color(0x8000c0), // More intense Purple fresnel
+        UNIVERSE_FRESNEL_POWER: 4.5, // Stronger fresnel
+        UNIVERSE_NOISE_SCALE: 4.0, // More detailed noise
 
-      ROOT_NODE_SIZE: 0.5,
-      ROOT_NODE_COLOR: 0xff00ff,
-      ROOT_AURA_SIZE_FACTOR: 1.8,
-      ROOT_AURA_OPACITY: 0.25,
-      ROOT_PARTICLE_COUNT: 200,
-      ROOT_PARTICLE_SIZE: 0.04,
-      ROOT_PARTICLE_SPEED: 0.8,
-      ROOT_PARTICLE_COLOR: 0xff88ff,
+        ROOT_NODE_SIZE: 0.6,
+        ROOT_NODE_COLOR: 0xff00ff, 
+        ROOT_AURA_SIZE_FACTOR: 2.0,
+        ROOT_AURA_OPACITY: 0.3,
+        ROOT_PARTICLE_COUNT: 8000, // Significantly more
+        ROOT_PARTICLE_SIZE: 0.06,
+        ROOT_PARTICLE_SPEED: 1.2,
+        ROOT_PARTICLE_COLOR: 0xffaaff,
 
-      NUM_BLACK_HOLES: 15,
-      BH_BASE_SIZE: 0.15,
-      BH_ORBIT_RADIUS_FACTOR: 0.8,
-      BH_COLORS: [0xff3300, 0xffff33, 0x33ff66, 0x00ccff, 0xcc33ff, 0xff66cc],
-      ACCRETION_DISK_RADIUS_FACTOR: 2.5,
-      ACCRETION_DISK_THICKNESS: 0.015,
-      ACCRETION_DISK_OPACITY: 0.7,
+        NUM_BLACK_HOLES: 35, 
+        BH_BASE_SIZE: 0.18,
+        BH_ORBIT_RADIUS_FACTOR: 0.75,
+        BH_COLORS: [0xff3300, 0xffff33, 0x33ff66, 0x00ccff, 0xcc33ff, 0xff66cc, 0xff0000, 0x00ff00, 0x0000ff], // More colors
+        ACCRETION_DISK_RADIUS_FACTOR: 3.0, 
+        ACCRETION_DISK_THICKNESS: 0.01, // Thinner appearance
+        ACCRETION_DISK_OPACITY: 0.75,
+        ACCRETION_DISK_COLOR_1: new THREE.Color(0xff8800), // Orange/Yellow
+        ACCRETION_DISK_COLOR_2: new THREE.Color(0x8800ff), // Purple/Blue
 
-      WORMROOT_RADIUS: 0.025,
-      WORMROOT_COLOR_PRIMARY: new THREE.Color(0xaa00ff),
-      WORMROOT_COLOR_SECONDARY: new THREE.Color(0xff55ff),
-      WORMROOT_FLOW_SPEED: 1.8,
-      WORMROOT_PULSE_SPEED: 2.2,
+        BH_JET_ENABLED: true,
+        BH_JET_PARTICLE_COUNT: 70, // Per jet stream
+        BH_JET_PARTICLE_SIZE: 0.08,
+        BH_JET_PARTICLE_SPEED: 3.0,
+        BH_JET_PARTICLE_LIFESPAN: 0.8, // seconds
+        BH_JET_SPREAD_ANGLE: 0.2, // Radians
 
-      STAR_COUNT: 8000,
-      STAR_SIZE: 0.03,
-      STAR_SPREAD_FACTOR: 18,
-      STAR_BASE_COLOR: 0xeeeeff,
+        WORMROOT_RADIUS: 0.03,
+        WORMROOT_COLOR_PRIMARY: new THREE.Color(0xcc00ff), 
+        WORMROOT_COLOR_SECONDARY: new THREE.Color(0xff77ff),
+        WORMROOT_FLOW_SPEED: 2.5, // Faster
+        WORMROOT_PULSE_SPEED: 3.5, // Faster
+        INTER_BH_CONNECTIONS_PER_BH: 1, // Number of additional connections per BH
 
-      BLOOM_THRESHOLD: 0.1,
-      BLOOM_STRENGTH: 0.6,
-      BLOOM_RADIUS: 0.3,
+        STAR_COUNT: 75000, // Vastly more stars
+        STAR_SIZE: 0.035,
+        STAR_SPREAD_FACTOR: 25, // Spread them further
+        STAR_BASE_COLOR: 0 ffffee,
 
-      CAMERA_FOV: 70,
-      CAMERA_AUTO_ROTATE_SPEED: 0.1,
+        BLOOM_THRESHOLD: 0.05, // Lower threshold for more bloom
+        BLOOM_STRENGTH: 1.3, // Stronger bloom
+        BLOOM_RADIUS: 0.7,   // Wider bloom
+
+        CAMERA_FOV: 75,
+        CAMERA_AUTO_ROTATE_SPEED: 0.25, // Faster rotation
     };
 
-    function createUniverse() {
-      const geometry = new THREE.SphereGeometry(CONFIG.UNIVERSE_RADIUS, 64, 64);
-      const material = new THREE.ShaderMaterial({
-        uniforms: {
-          baseColor: { value: CONFIG.UNIVERSE_BASE_COLOR },
-          fresnelColor: { value: CONFIG.UNIVERSE_FRESNEL_COLOR },
-          fresnelPower: { value: CONFIG.UNIVERSE_FRESNEL_POWER },
-          time: { value: 0.0 },
-          noiseScale: { value: CONFIG.UNIVERSE_NOISE_SCALE },
-          opacity: { value: CONFIG.UNIVERSE_OPACITY }
-        },
-        vertexShader: `
-          varying vec3 vNormal;
-          varying vec3 vViewPosition;
-          varying vec2 vUv;
-          void main() {
-            vUv = uv;
-            vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-            vNormal = normalize(normalMatrix * normal);
-            vViewPosition = -mvPosition.xyz;
-            gl_Position = projectionMatrix * mvPosition;
-          }
-        `,
-        fragmentShader: `
-          uniform vec3 baseColor;
-          uniform vec3 fresnelColor;
-          uniform float fresnelPower;
-          uniform float time;
-          uniform float noiseScale;
-          uniform float opacity;
-          varying vec3 vNormal;
-          varying vec3 vViewPosition;
-          varying vec2 vUv;
-
-          float random(vec2 st) {
-            return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
-          }
-          float noise(vec2 st) {
-            vec2 i = floor(st);
-            vec2 f = fract(st);
-            float a = random(i);
-            float b = random(i + vec2(1.0, 0.0));
-            float c = random(i + vec2(0.0, 1.0));
-            float d = random(i + vec2(1.0, 1.0));
-            vec2 u = f * f * (3.0 - 2.0 * f);
-            return mix(a, b, u.x) + (c - a)* u.y * (1.0 - u.x) + (d - b) * u.y * u.x;
-          }
-
-          void main() {
-            float fresnelTerm = dot(normalize(vNormal), normalize(vViewPosition));
-            fresnelTerm = clamp(1.0 - fresnelTerm, 0.0, 1.0);
-            fresnelTerm = pow(fresnelTerm, fresnelPower);
-            float noiseVal = noise(vUv * noiseScale + time * 0.05);
-            vec3 color = mix(baseColor, fresnelColor, fresnelTerm);
-            color += noiseVal * 0.12;
-            gl_FragColor = vec4(color, opacity + fresnelTerm * 0.3 + noiseVal * 0.06);
-          }
-        `,
-        transparent: true,
-        side: THREE.BackSide,
-        blending: THREE.AdditiveBlending
-      });
-      universe = new THREE.Mesh(geometry, material);
-      scene.add(universe);
-    }
-
-    function createRootNode() {
-      const geometry = new THREE.IcosahedronGeometry(CONFIG.ROOT_NODE_SIZE, 3);
-      const material = new THREE.MeshStandardMaterial({
-        color: CONFIG.ROOT_NODE_COLOR,
-        emissive: CONFIG.ROOT_NODE_COLOR,
-        emissiveIntensity: 1.5,
-        metalness: 0.2,
-        roughness: 0.3
-      });
-      rootNode = new THREE.Mesh(geometry, material);
-      scene.add(rootNode);
-
-      const auraGeometry = new THREE.SphereGeometry(CONFIG.ROOT_NODE_SIZE * CONFIG.ROOT_AURA_SIZE_FACTOR, 32, 32);
-      const auraMaterial = new THREE.MeshBasicMaterial({
-        color: CONFIG.ROOT_NODE_COLOR,
-        transparent: true,
-        opacity: CONFIG.ROOT_AURA_OPACITY,
-        blending: THREE.AdditiveBlending
-      });
-      rootAura = new THREE.Mesh(auraGeometry, auraMaterial);
-      scene.add(rootAura);
-
-      const particlePositions = new Float32Array(CONFIG.ROOT_PARTICLE_COUNT * 3);
-      const particleSpeeds = [];
-      const maxDistSq = Math.pow(CONFIG.UNIVERSE_RADIUS * 0.6, 2);
-      for (let i = 0; i < CONFIG.ROOT_PARTICLE_COUNT; i++) {
-        particlePositions[i * 3] = (Math.random() - 0.5) * 0.1;
-        particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 0.1;
-        particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 0.1;
-        const speed = new THREE.Vector3(
-          (Math.random() - 0.5),
-          (Math.random() - 0.5),
-          (Math.random() - 0.5)
-        ).normalize().multiplyScalar(CONFIG.ROOT_PARTICLE_SPEED * (0.5 + Math.random() * 0.5));
-        particleSpeeds.push(speed);
-      }
-      const particleGeometry = new THREE.BufferGeometry();
-      particleGeometry.setAttribute('position', new THREE.Float32BufferAttribute(particlePositions, 3));
-      const particleMaterial = new THREE.PointsMaterial({
-        color: CONFIG.ROOT_PARTICLE_COLOR,
-        size: CONFIG.ROOT_PARTICLE_SIZE,
-        blending: THREE.AdditiveBlending,
-        transparent: true,
-        opacity: 0.8,
-        sizeAttenuation: true
-      });
-      rootParticles = new THREE.Points(particleGeometry, particleMaterial);
-      rootParticles.userData.speeds = particleSpeeds;
-      rootParticles.userData.maxDistSq = maxDistSq;
-      scene.add(rootParticles);
-    }
-
-    function createBlackHolesAndWormroots() {
-      const bhOrbitRadius = CONFIG.UNIVERSE_RADIUS * CONFIG.BH_ORBIT_RADIUS_FACTOR;
-      for (let i = 0; i < CONFIG.NUM_BLACK_HOLES; i++) {
-        const y_bh = 1 - (i / (CONFIG.NUM_BLACK_HOLES - 1)) * 2;
-        const radius_at_y = Math.sqrt(1 - y_bh * y_bh);
-        const phi_bh = (i * Math.PI * (3.0 - Math.sqrt(5.0)));
-        const x = bhOrbitRadius * radius_at_y * Math.cos(phi_bh);
-        const z = bhOrbitRadius * radius_at_y * Math.sin(phi_bh);
-        const y = bhOrbitRadius * y_bh;
-
-        const bhSize = CONFIG.BH_BASE_SIZE * (0.6 + Math.random() * 0.8);
-        const bhGeometry = new THREE.SphereGeometry(bhSize, 16, 16);
-        const bhColor = new THREE.Color(CONFIG.BH_COLORS[i % CONFIG.BH_COLORS.length]);
-        const bhMaterial = new THREE.MeshStandardMaterial({
-          color: bhColor,
-          emissive: bhColor,
-          emissiveIntensity: 1.0,
-          metalness: 0.1,
-          roughness: 0.6
-        });
-        const blackHole = new THREE.Mesh(bhGeometry, bhMaterial);
-        blackHole.position.set(x, y, z);
-        scene.add(blackHole);
-        blackHoles.push(blackHole);
-
-        const bhLight = new THREE.PointLight(bhColor, 0.8, CONFIG.UNIVERSE_RADIUS * 0.4);
-        blackHole.add(bhLight);
-
-        const diskRadius = bhSize * CONFIG.ACCRETION_DISK_RADIUS_FACTOR;
-        const diskGeometry = new THREE.RingGeometry(diskRadius * 0.6, diskRadius, 32);
-        const diskMaterial = new THREE.MeshBasicMaterial({
-          color: bhColor,
-          side: THREE.DoubleSide,
-          transparent: true,
-          opacity: CONFIG.ACCRETION_DISK_OPACITY,
-          blending: THREE.AdditiveBlending
-        });
-        const disk = new THREE.Mesh(diskGeometry, diskMaterial);
-        disk.lookAt(new THREE.Vector3(0, 1, 0));
-        disk.rotation.x += (Math.random() - 0.5) * 0.5;
-        disk.rotation.z += (Math.random() - 0.5) * 0.5;
-        blackHole.add(disk);
-        accretionDisks.push(disk);
-
-        blackHoleData.push({
-          initialPosition: new THREE.Vector3(x, y, z),
-          orbitAxis: new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize(),
-          orbitSpeed: (Math.random() - 0.5) * 0.001,
-          pulseSpeed: 0.003 + Math.random() * 0.004,
-          pulseOffset: Math.random() * Math.PI * 2,
-          baseScale: 1.0,
-          light: bhLight,
-          diskRotationSpeed: (Math.random() - 0.5) * 0.02
-        });
-
-        const wormrootMaterial = new THREE.ShaderMaterial({
-          uniforms: {
-            time: { value: 0.0 },
-            color1: { value: CONFIG.WORMROOT_COLOR_PRIMARY },
-            color2: { value: CONFIG.WORMROOT_COLOR_SECONDARY },
-            flowSpeed: { value: CONFIG.WORMROOT_FLOW_SPEED },
-            pulseSpeed: { value: CONFIG.WORMROOT_PULSE_SPEED },
-            opacity: { value: 0.8 }
-          },
-          vertexShader: `
-            varying vec2 vUv;
-            void main() {
-              vUv = uv;
-              gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-            }
-          `,
-          fragmentShader: `
-            uniform float time;
-            uniform vec3 color1;
-            uniform vec3 color2;
-            uniform float flowSpeed;
-            uniform float pulseSpeed;
-            uniform float opacity;
-            varying vec2 vUv;
-
-            void main() {
-              float flow = fract(vUv.y * 2.0 - time * flowSpeed);
-              float pulse = sin(vUv.y * 10.0 + time * pulseSpeed) * 0.5 + 0.5;
-              float band = smoothstep(0.45, 0.5, flow) - smoothstep(0.5, 0.55, flow);
-              band += smoothstep(0.95, 1.0, flow) - smoothstep(1.0, 1.05, flow);
-              float edgeFade = pow(vUv.x * (1.0 - vUv.x) * 4.0, 0.7);
-              vec3 mixedColor = mix(color1, color2, pulse);
-              float finalAlpha = band * edgeFade * opacity * (0.6 + pulse * 0.4);
-              gl_FragColor = vec4(mixedColor, finalAlpha);
-            }
-          `,
-          transparent: true,
-          blending: THREE.AdditiveBlending,
-          side: THREE.DoubleSide
-        });
-
-        const wormrootGeometry = new THREE.CylinderGeometry(CONFIG.WORMROOT_RADIUS, CONFIG.WORMROOT_RADIUS, 1, 8, 16, true);
-        wormrootGeometry.translate(0, 0.5, 0);
-        wormrootGeometry.rotateX(Math.PI / 2);
-        const worm = new THREE.Mesh(wormrootGeometry, wormrootMaterial);
-        scene.add(worm);
-        wormroots.push(worm);
-      }
-    }
-
-    function createStarfield() {
-      const geometry = new THREE.SphereGeometry(CONFIG.STAR_SIZE, 8, 8);
-      const material = new THREE.MeshBasicMaterial({
-        color: CONFIG.STAR_BASE_COLOR,
-        transparent: true,
-        opacity: 0.7,
-        blending: THREE.AdditiveBlending
-      });
-      const starMesh = new THREE.InstancedMesh(geometry, material, CONFIG.STAR_COUNT);
-      const matrix = new THREE.Matrix4();
-      const color = new THREE.Color();
-
-      for (let i = 0; i < CONFIG.STAR_COUNT; i++) {
-        const r = THREE.MathUtils.randFloat(CONFIG.UNIVERSE_RADIUS * 1.2, CONFIG.UNIVERSE_RADIUS * CONFIG.STAR_SPREAD_FACTOR);
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.acos((Math.random() * 2) - 1);
-        const x = r * Math.sin(phi) * Math.cos(theta);
-        const y = r * Math.sin(phi) * Math.sin(theta);
-        const z = r * Math.cos(phi);
-
-        matrix.setPosition(x, y, z);
-        starMesh.setMatrixAt(i, matrix);
-        color.set(CONFIG.STAR_BASE_COLOR).offsetHSL((Math.random() - 0.5) * 0.1, (Math.random() - 0.5) * 0.2, (Math.random() - 0.5) * 0.2);
-        starMesh.setColorAt(i, color);
-      }
-      starMesh.instanceMatrix.needsUpdate = true;
-      starField = starMesh;
-      scene.add(starField);
-    }
-
-    function setupPostProcessing() {
-      composer = new THREE.EffectComposer(renderer);
-      const renderPass = new THREE.RenderPass(scene, camera);
-      composer.addPass(renderPass);
-
-      const bloomPass = new THREE.UnrealBloomPass(
-        new THREE.Vector2(window.innerWidth, window.innerHeight),
-        CONFIG.BLOOM_STRENGTH,
-        CONFIG.BLOOM_RADIUS,
-        CONFIG.BLOOM_THRESHOLD
-      );
-      composer.addPass(bloomPass);
-
-      const chromaticAberration = new THREE.ShaderPass({
-        uniforms: {
-          tDiffuse: { value: null },
-          amount: { value: 0.002 }
-        },
-        vertexShader: `
-          varying vec2 vUv;
-          void main() {
-            vUv = uv;
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-          }
-        `,
-        fragmentShader: `
-          uniform sampler2D tDiffuse;
-          uniform float amount;
-          varying vec2 vUv;
-          void main() {
-            vec2 offset = amount * (vUv - 0.5);
-            vec4 r = texture2D(tDiffuse, vUv + offset);
-            vec4 g = texture2D(tDiffuse, vUv);
-            vec4 b = texture2D(tDiffuse, vUv - offset);
-            gl_FragColor = vec4(r.r, g.g, b.b, 1.0);
-          }
-        `
-      });
-      composer.addPass(chromaticAberration);
-    }
-
     function init() {
-      document.getElementById('loading').style.display = 'block';
-      if (!window.WebGLRenderingContext) {
-        alert('Your browser does not support WebGL.');
-        return;
-      }
+        scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x000001, 0.025); // Darker, slightly less dense fog
 
-      scene = new THREE.Scene();
-      scene.fog = new THREE.FogExp2(0x000003, 0.035);
+        camera = new THREE.PerspectiveCamera(CONFIG.CAMERA_FOV, window.innerWidth / window.innerHeight, 0.1, 3000);
+        camera.position.set(0, CONFIG.UNIVERSE_RADIUS * 0.5, CONFIG.UNIVERSE_RADIUS * 1.5);
 
-      camera = new THREE.PerspectiveCamera(CONFIG.CAMERA_FOV, window.innerWidth / window.innerHeight, 0.1, 2000);
-      camera.position.set(0, CONFIG.UNIVERSE_RADIUS * 0.6, CONFIG.UNIVERSE_RADIUS * 1.8);
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.outputEncoding = THREE.sRGBEncoding; // Important for bloom and colors
+        document.body.appendChild(renderer.domElement);
 
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.outputEncoding = THREE.sRGBEncoding;
-      document.body.appendChild(renderer.domElement);
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.03;
+        controls.minDistance = CONFIG.UNIVERSE_RADIUS * 0.1;
+        controls.maxDistance = CONFIG.UNIVERSE_RADIUS * 7; // Allow further zoom out
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = CONFIG.CAMERA_AUTO_ROTATE_SPEED;
+        controls.target.set(0, 0, 0);
 
-      controls = new THREE.OrbitControls(camera, renderer.domElement);
-      controls.enableDamping = true;
-      controls.dampingFactor = 0.035;
-      controls.minDistance = CONFIG.UNIVERSE_RADIUS * 0.2;
-      controls.maxDistance = CONFIG.UNIVERSE_RADIUS * 5;
-      controls.autoRotate = true;
-      controls.autoRotateSpeed = CONFIG.CAMERA_AUTO_ROTATE_SPEED;
-      controls.target.set(0, 0, 0);
+        // Lights
+        const ambientLight = new THREE.AmbientLight(0x605070, 0.8); 
+        scene.add(ambientLight);
+        
+        const rootLight = new THREE.PointLight(CONFIG.ROOT_NODE_COLOR, 3.5, CONFIG.UNIVERSE_RADIUS * 4);
+        rootLight.position.set(0, 0, 0);
+        scene.add(rootLight);
 
-      const ambientLight = new THREE.AmbientLight(0x504060, 0.7);
-      scene.add(ambientLight);
-      const rootLight = new THREE.PointLight(CONFIG.ROOT_NODE_COLOR, 2.5, CONFIG.UNIVERSE_RADIUS * 3);
-      rootLight.position.set(0, 0, 0);
-      scene.add(rootLight);
+        // Universe Membrane with Enhanced Fresnel Shader
+        const universeGeometry = new THREE.SphereGeometry(CONFIG.UNIVERSE_RADIUS, 64, 64);
+        const universeMaterial = new THREE.ShaderMaterial({
+            uniforms: {
+                baseColor: { value: CONFIG.UNIVERSE_BASE_COLOR },
+                fresnelColor: { value: CONFIG.UNIVERSE_FRESNEL_COLOR },
+                fresnelPower: { value: CONFIG.UNIVERSE_FRESNEL_POWER },
+                time: { value: 0.0 },
+                noiseScale: { value: CONFIG.UNIVERSE_NOISE_SCALE },
+                opacity: { value: CONFIG.UNIVERSE_OPACITY }
+            },
+            vertexShader: `
+                varying vec3 vNormal;
+                varying vec3 vViewPosition;
+                varying vec2 vUv;
+                void main() {
+                    vUv = uv;
+                    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+                    vNormal = normalize(normalMatrix * normal);
+                    vViewPosition = -mvPosition.xyz;
+                    gl_Position = projectionMatrix * mvPosition;
+                }
+            `,
+            fragmentShader: `
+                uniform vec3 baseColor;
+                uniform vec3 fresnelColor;
+                uniform float fresnelPower;
+                uniform float time;
+                uniform float noiseScale;
+                uniform float opacity;
+                varying vec3 vNormal;
+                varying vec3 vViewPosition;
+                varying vec2 vUv;
 
-      createUniverse();
-      createRootNode();
-      createBlackHolesAndWormroots();
-      createStarfield();
-      setupPostProcessing();
+                float random(vec2 st) { return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123); }
+                float noise(vec2 st) {
+                    vec2 i = floor(st); vec2 f = fract(st);
+                    float a = random(i); float b = random(i + vec2(1.0, 0.0));
+                    float c = random(i + vec2(0.0, 1.0)); float d = random(i + vec2(1.0, 1.0));
+                    vec2 u = f * f * (3.0 - 2.0 * f);
+                    return mix(a, b, u.x) + (c - a)* u.y * (1.0 - u.x) + (d - b) * u.y * u.x;
+                }
+                float fbm(vec2 st) {
+                    float value = 0.0; float amplitude = 0.5;
+                    for (int i = 0; i < 5; i++) { // More octaves
+                        value += amplitude * noise(st);
+                        st *= 2.1; amplitude *= 0.45;
+                    }
+                    return value;
+                }
 
-      document.getElementById('toggleRotation').addEventListener('click', () => {
-        controls.autoRotate = !controls.autoRotate;
-      });
+                void main() {
+                    float dynamicFresnelPower = fresnelPower * (1.0 + 0.3 * sin(time * 0.4));
+                    float fresnelTerm = dot(normalize(vNormal), normalize(vViewPosition));
+                    fresnelTerm = clamp(1.0 - fresnelTerm, 0.0, 1.0);
+                    fresnelTerm = pow(fresnelTerm, dynamicFresnelPower);
 
-      window.addEventListener('resize', onWindowResize, false);
-      document.getElementById('loading').style.display = 'none';
-      isInitialized = true;
+                    float noiseVal1 = fbm(vUv * noiseScale + time * 0.15);
+                    float noiseVal2 = fbm(vUv * noiseScale * 0.6 + time * -0.08 + vec2(123.4, 567.8));
+                    
+                    vec3 dynamicFresnelColor = fresnelColor + vec3(sin(time*0.6)*0.15, cos(time*0.45)*0.15, sin(time*0.8 + 1.0)*0.15);
+                    vec3 color = mix(baseColor, dynamicFresnelColor, fresnelTerm);
+                    color += (noiseVal1 * 0.2 + noiseVal2 * 0.15);
+
+                    float finalOpacity = opacity + fresnelTerm * 0.5 + (noiseVal1 + noiseVal2) * 0.08;
+                    finalOpacity *= (0.7 + 0.3 * sin(time * 0.6)); // Pulsating overall opacity
+                    gl_FragColor = vec4(color, clamp(finalOpacity, 0.02, 0.95)); // Ensure some visibility
+                }
+            `,
+            transparent: true,
+            side: THREE.BackSide,
+            blending: THREE.AdditiveBlending, 
+        });
+        universe = new THREE.Mesh(universeGeometry, universeMaterial);
+        scene.add(universe);
+
+        // Central Singularity (Root Node) - TorusKnot
+        const rootGeometry = new THREE.TorusKnotGeometry(CONFIG.ROOT_NODE_SIZE, CONFIG.ROOT_NODE_SIZE * 0.25, 256, 20, 5, 7);
+        const rootMaterial = new THREE.MeshStandardMaterial({
+            color: CONFIG.ROOT_NODE_COLOR,
+            emissive: CONFIG.ROOT_NODE_COLOR,
+            emissiveIntensity: 2.0, // Higher base intensity
+            metalness: 0.3,
+            roughness: 0.2,
+        });
+        rootNode = new THREE.Mesh(rootGeometry, rootMaterial);
+        scene.add(rootNode);
+
+        // Root Node Aura
+        const auraGeometry = new THREE.SphereGeometry(CONFIG.ROOT_NODE_SIZE * CONFIG.ROOT_AURA_SIZE_FACTOR, 48, 48);
+        const auraMaterial = new THREE.MeshBasicMaterial({
+            color: CONFIG.ROOT_NODE_COLOR,
+            transparent: true,
+            opacity: CONFIG.ROOT_AURA_OPACITY,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false, // Avoid z-fighting with particles
+        });
+        rootAura = new THREE.Mesh(auraGeometry, auraMaterial);
+        scene.add(rootAura);
+
+        // Root Node Particles
+        const particlePositions = [];
+        const particleSpeeds = [];
+        const particleMaxDistSq = Math.pow(CONFIG.UNIVERSE_RADIUS * 0.7, 2);
+        for (let i = 0; i < CONFIG.ROOT_PARTICLE_COUNT; i++) {
+            particlePositions.push( (Math.random() - 0.5) * 0.15, (Math.random() - 0.5) * 0.15, (Math.random() - 0.5) * 0.15 );
+            const speed = new THREE.Vector3((Math.random() - 0.5), (Math.random() - 0.5), (Math.random() - 0.5))
+                          .normalize().multiplyScalar(CONFIG.ROOT_PARTICLE_SPEED * (0.4 + Math.random() * 0.8));
+            particleSpeeds.push(speed);
+        }
+        const rootParticleGeometry = new THREE.BufferGeometry();
+        rootParticleGeometry.setAttribute('position', new THREE.Float32BufferAttribute(particlePositions, 3));
+        const rootParticleMaterial = new THREE.PointsMaterial({
+            color: CONFIG.ROOT_PARTICLE_COLOR,
+            size: CONFIG.ROOT_PARTICLE_SIZE,
+            blending: THREE.AdditiveBlending,
+            transparent: true,
+            opacity: 0.9,
+            sizeAttenuation: true,
+            depthWrite: false,
+        });
+        rootParticles = new THREE.Points(rootParticleGeometry, rootParticleMaterial);
+        rootParticles.userData.speeds = particleSpeeds;
+        rootParticles.userData.maxDistSq = particleMaxDistSq;
+        scene.add(rootParticles);
+
+
+        // Black Holes, Accretion Disks, Wormroots, and Jets
+        const bhOrbitRadius = CONFIG.UNIVERSE_RADIUS * CONFIG.BH_ORBIT_RADIUS_FACTOR;
+        for (let i = 0; i < CONFIG.NUM_BLACK_HOLES; i++) {
+            const y_bh = 1 - (i / (CONFIG.NUM_BLACK_HOLES - 1)) * 2;
+            const radius_at_y = Math.sqrt(1 - y_bh * y_bh);
+            const phi_bh = (i * Math.PI * (3.0 - Math.sqrt(5.0))); // Fibonacci spiral distribution
+
+            const x = bhOrbitRadius * radius_at_y * Math.cos(phi_bh);
+            const z = bhOrbitRadius * radius_at_y * Math.sin(phi_bh);
+            const y = bhOrbitRadius * y_bh;
+
+            const bhSize = CONFIG.BH_BASE_SIZE * (0.5 + Math.random() * 0.7);
+            const bhGeometry = new THREE.SphereGeometry(bhSize, 20, 20); // More detail
+            const bhColor = new THREE.Color(CONFIG.BH_COLORS[i % CONFIG.BH_COLORS.length]);
+            const bhMaterial = new THREE.MeshStandardMaterial({
+                color: 0x010101, // Almost black core
+                emissive: bhColor.clone().multiplyScalar(0.2), // Subtle emissive core
+                emissiveIntensity: 0.5,
+                metalness: 0.0,
+                roughness: 0.8
+            });
+            const blackHole = new THREE.Mesh(bhGeometry, bhMaterial);
+            blackHole.position.set(x, y, z);
+            scene.add(blackHole);
+            blackHoles.push(blackHole);
+            
+            const bhLight = new THREE.PointLight(bhColor, 1.2, CONFIG.UNIVERSE_RADIUS * 0.5); // Stronger light
+            bhLight.position.copy(blackHole.position); // Initially, will be updated
+            scene.add(bhLight); // Add to scene directly so it's not scaled with BH
+
+            // Accretion Disk with ShaderMaterial
+            const diskRadius = bhSize * CONFIG.ACCRETION_DISK_RADIUS_FACTOR;
+            const diskGeometry = new THREE.RingGeometry(diskRadius * 0.5, diskRadius, 48, 8); // More segments
+            const diskMaterial = new THREE.ShaderMaterial({
+                uniforms: {
+                    time: { value: 0.0 },
+                    color1: { value: CONFIG.ACCRETION_DISK_COLOR_1.clone().lerp(bhColor, 0.3) },
+                    color2: { value: CONFIG.ACCRETION_DISK_COLOR_2.clone().lerp(bhColor, 0.3) },
+                    opacity: { value: CONFIG.ACCRETION_DISK_OPACITY },
+                    bhColor: { value: bhColor }
+                },
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform float time;
+                    uniform vec3 color1;
+                    uniform vec3 color2;
+                    uniform vec3 bhColor;
+                    uniform float opacity;
+                    varying vec2 vUv;
+                    #define PI 3.14159265359
+
+                    void main() {
+                        vec2 st = vUv - 0.5;
+                        float r = length(st); // 0 to 0.5
+                        float angle = atan(st.y, st.x);
+
+                        float swirl = angle * 3.0 + r * 20.0 - time * 1.5; // Faster swirl, more bands
+                        float pattern = (sin(swirl) * 0.5 + 0.5) * (cos(r * PI * 12.0 - time * 0.5) * 0.5 + 0.5); // Radial waves
+                        
+                        vec3 mixedColor = mix(color1, color2, smoothstep(0.1, 0.4, r));
+                        mixedColor = mix(mixedColor, bhColor, pattern * 0.6); // Blend with BH color
+
+                        float edgeFade = smoothstep(0.0, 0.05, r) * (1.0 - smoothstep(0.48, 0.5, r)); // Sharper edges
+                        float brightness = (0.7 + 0.3 * sin(r * PI * 5.0 - time * 2.0 + angle * 2.0)); // Pulsating brightness
+                        
+                        gl_FragColor = vec4(mixedColor * brightness, edgeFade * opacity * (0.5 + 0.5 * pattern));
+                    }
+                `,
+                transparent: true,
+                blending: THREE.AdditiveBlending,
+                side: THREE.DoubleSide,
+                depthWrite: false,
+            });
+            const disk = new THREE.Mesh(diskGeometry, diskMaterial);
+            disk.lookAt(new THREE.Vector3(0,1,0)); 
+            disk.rotation.x += (Math.random() - 0.5) * 0.8; 
+            disk.rotation.z += (Math.random() - 0.5) * 0.8;
+            blackHole.add(disk); 
+            accretionDisks.push(disk);
+
+            blackHoleData.push({
+                initialPosition: new THREE.Vector3(x, y, z),
+                orbitAxis: new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize(),
+                orbitSpeed: (Math.random() - 0.5) * 0.0015, // Slightly faster orbits
+                pulseSpeed: 0.004 + Math.random() * 0.005,
+                pulseOffset: Math.random() * Math.PI * 2,
+                baseScale: 1.0,
+                light: bhLight,
+                diskRotationSpeed: (Math.random() - 0.5) * 0.03,
+                bhColor: bhColor
+            });
+
+            // Wormroots to Central Node
+            const wormrootMaterial = new THREE.ShaderMaterial({ // Shared material for performance
+                uniforms: {
+                    time: { value: 0.0 },
+                    color1: { value: CONFIG.WORMROOT_COLOR_PRIMARY },
+                    color2: { value: CONFIG.WORMROOT_COLOR_SECONDARY },
+                    flowSpeed: { value: CONFIG.WORMROOT_FLOW_SPEED },
+                    pulseSpeed: { value: CONFIG.WORMROOT_PULSE_SPEED },
+                    opacity: { value: 0.85 } // Slightly higher base opacity
+                },
+                vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+                fragmentShader: `
+                    uniform float time; uniform vec3 color1; uniform vec3 color2;
+                    uniform float flowSpeed; uniform float pulseSpeed; uniform float opacity;
+                    varying vec2 vUv;
+                    void main() {
+                        float flow = fract(vUv.y * 3.0 - time * flowSpeed); // More bands, faster flow
+                        float pulse = sin(vUv.y * 15.0 + time * pulseSpeed) * 0.5 + 0.5; // Faster pulse
+                        float band = smoothstep(0.35, 0.45, flow) - smoothstep(0.45, 0.55, flow);
+                        band = max(band, smoothstep(0.85, 0.95, flow) - smoothstep(0.95, 1.05, flow));
+                        float edgeFade = pow(vUv.x * (1.0-vUv.x) * 4.0, 0.3); // Softer edge fade
+                        vec3 mixedColor = mix(color1, color2, pulse * (0.7 + 0.3*sin(time*0.5))); // Color shift
+                        float finalAlpha = band * edgeFade * opacity * (0.4 + pulse * 0.6);
+                        gl_FragColor = vec4(mixedColor, finalAlpha);
+                    }`,
+                transparent: true, blending: THREE.AdditiveBlending, side: THREE.DoubleSide, depthWrite: false,
+            });
+            const wormrootGeometry = new THREE.CylinderGeometry(CONFIG.WORMROOT_RADIUS, CONFIG.WORMROOT_RADIUS, 1, 10, 20, true); 
+            wormrootGeometry.translate(0, 0.5, 0); 
+            wormrootGeometry.rotateX(Math.PI / 2); 
+            const worm = new THREE.Mesh(wormrootGeometry, wormrootMaterial.clone()); // Clone for unique time uniform if needed, or share
+            scene.add(worm);
+            wormroots.push(worm);
+
+            // Black Hole Jets
+            if (CONFIG.BH_JET_ENABLED) {
+                const jetData = { particles: [], material: null, geometry: null, mesh: null, bhIndex: i };
+                const jetPositions = [];
+                const jetVelocities = [];
+                const jetAges = [];
+                const jetLifespans = [];
+
+                for(let k=0; k < CONFIG.BH_JET_PARTICLE_COUNT * 2; k++) { // *2 for bipolar
+                    jetPositions.push(0,0,0); // Start at BH center
+                    const velocity = new THREE.Vector3();
+                    // Simple bipolar jet along local Y axis of BH (can be oriented later)
+                    const spread = CONFIG.BH_JET_SPREAD_ANGLE;
+                    const randomAngle = Math.random() * Math.PI * 2;
+                    const randomRadius = Math.random() * spread;
+                    
+                    velocity.set(
+                        Math.cos(randomAngle) * randomRadius,
+                        (k < CONFIG.BH_JET_PARTICLE_COUNT ? 1 : -1) * (1.0 - randomRadius*0.5), // Bipolar
+                        Math.sin(randomAngle) * randomRadius
+                    ).normalize().multiplyScalar(CONFIG.BH_JET_PARTICLE_SPEED * (0.7 + Math.random() * 0.6));
+                    
+                    jetVelocities.push(velocity);
+                    jetAges.push(Math.random() * CONFIG.BH_JET_PARTICLE_LIFESPAN); // Stagger initial ages
+                    jetLifespans.push(CONFIG.BH_JET_PARTICLE_LIFESPAN * (0.8 + Math.random() * 0.4));
+                }
+                jetData.geometry = new THREE.BufferGeometry();
+                jetData.geometry.setAttribute('position', new THREE.Float32BufferAttribute(jetPositions, 3));
+                jetData.material = new THREE.PointsMaterial({
+                    color: bhColor.clone().lerp(new THREE.Color(0xffffff), 0.5), // Brighter jet color
+                    size: CONFIG.BH_JET_PARTICLE_SIZE,
+                    blending: THREE.AdditiveBlending,
+                    transparent: true,
+                    opacity: 0.9,
+                    sizeAttenuation: true,
+                    depthWrite: false,
+                });
+                jetData.mesh = new THREE.Points(jetData.geometry, jetData.material);
+                blackHole.add(jetData.mesh); // Jets are children of BH, so they move/rotate with it
+                
+                jetData.velocities = jetVelocities;
+                jetData.ages = jetAges;
+                jetData.lifespans = jetLifespans;
+                bhJets.push(jetData);
+            }
+        }
+        
+        // Inter-Black Hole Wormroots
+        const interBHConnectedPairs = new Set();
+        for (let i = 0; i < CONFIG.NUM_BLACK_HOLES; i++) {
+            for (let k = 0; k < CONFIG.INTER_BH_CONNECTIONS_PER_BH; k++) {
+                let j = Math.floor(Math.random() * CONFIG.NUM_BLACK_HOLES);
+                const pairKey1 = `${Math.min(i,j)}-${Math.max(i,j)}`;
+                if (i === j || interBHConnectedPairs.has(pairKey1)) { // Avoid self-connection or duplicate
+                    // Potentially try a few more times to find a unique pair
+                    let retries = 0;
+                    while((i === j || interBHConnectedPairs.has(pairKey1)) && retries < CONFIG.NUM_BLACK_HOLES) {
+                        j = Math.floor(Math.random() * CONFIG.NUM_BLACK_HOLES);
+                        retries++;
+                    }
+                    if (i === j || interBHConnectedPairs.has(pairKey1)) continue; // Skip if still no good pair
+                }
+                interBHConnectedPairs.add(pairKey1);
+
+                const wormrootGeo = wormroots[0].geometry; // Reuse geometry
+                const wormrootMat = wormroots[0].material.clone(); // Clone material for unique colors/timing
+                wormrootMat.uniforms.color1.value = blackHoles[i].material.emissive.clone().lerp(new THREE.Color(0xffffff),0.2);
+                wormrootMat.uniforms.color2.value = blackHoles[j].material.emissive.clone().lerp(new THREE.Color(0xffffff),0.2);
+                wormrootMat.uniforms.flowSpeed.value *= (0.8 + Math.random()*0.4); // Vary speeds
+                wormrootMat.uniforms.pulseSpeed.value *= (0.8 + Math.random()*0.4);
+
+                const interWorm = new THREE.Mesh(wormrootGeo, wormrootMat);
+                scene.add(interWorm);
+                interBHWormroots.push({mesh: interWorm, sourceIndex: i, targetIndex: j });
+            }
+        }
+
+
+        // Starfield
+        const starVertices = [];
+        const starColorsArr = [];
+        const baseStarColor = new THREE.Color(CONFIG.STAR_BASE_COLOR);
+        for (let i = 0; i < CONFIG.STAR_COUNT; i++) {
+            const R = CONFIG.UNIVERSE_RADIUS * CONFIG.STAR_SPREAD_FACTOR;
+            const r = THREE.MathUtils.randFloat(CONFIG.UNIVERSE_RADIUS * 1.5, R); // Start further out
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos((Math.random() * 2) - 1);
+            starVertices.push(r * Math.sin(phi) * Math.cos(theta), r * Math.sin(phi) * Math.sin(theta), r * Math.cos(phi));
+            const color = baseStarColor.clone().offsetHSL((Math.random() - 0.5) * 0.2, (Math.random() - 0.5) * 0.3, (Math.random() - 0.5) * 0.4);
+            starColorsArr.push(color.r, color.g, color.b);
+        }
+        const starGeometry = new THREE.BufferGeometry();
+        starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+        starGeometry.setAttribute('color', new THREE.Float32BufferAttribute(starColorsArr, 3));
+        const starMaterial = new THREE.PointsMaterial({
+            size: CONFIG.STAR_SIZE, sizeAttenuation: true, transparent: true,
+            opacity: 0.85, blending: THREE.AdditiveBlending, vertexColors: true, depthWrite: false,
+        });
+        starField = new THREE.Points(starGeometry, starMaterial);
+        scene.add(starField);
+
+        // Post-processing
+        composer = new THREE.EffectComposer(renderer);
+        const renderPass = new THREE.RenderPass(scene, camera);
+        composer.addPass(renderPass);
+
+        // God Rays Pass (inserted before Bloom)
+        godRaysPass = new THREE.ShaderPass(GodRaysFakeShader);
+        godRaysPass.uniforms.fX.value = 0.5; // Will be updated in animate
+        godRaysPass.uniforms.fY.value = 0.5; // Will be updated in animate
+        // Tweak GodRay parameters here if needed, e.g., for desired intensity with new bloom settings
+        godRaysPass.uniforms.fExposure.value = 0.25; // Reduced further, bloom will amplify
+        godRaysPass.uniforms.fDecay.value = 0.96;
+        godRaysPass.uniforms.fDensity.value = 0.97;
+        godRaysPass.uniforms.fWeight.value = 0.25;
+
+        composer.addPass(godRaysPass);
+
+        const bloomPass = new THREE.UnrealBloomPass(
+            new THREE.Vector2(window.innerWidth, window.innerHeight),
+            CONFIG.BLOOM_STRENGTH, CONFIG.BLOOM_RADIUS, CONFIG.BLOOM_THRESHOLD
+        );
+        composer.addPass(bloomPass);
+
+
+        window.addEventListener('resize', onWindowResize, false);
     }
 
     function onWindowResize() {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      composer.setSize(window.innerWidth, window.innerHeight);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        composer.setSize(window.innerWidth, window.innerHeight);
     }
-
-    const DUMMY_TARGET = new THREE.Object3D();
+    
+    const DUMMY_TARGET = new THREE.Object3D(); 
 
     function animate() {
-      requestAnimationFrame(animate);
-      if (!isInitialized) return;
+        requestAnimationFrame(animate);
+        const elapsedTime = clock.getElapsedTime();
+        const deltaTime = clock.getDelta();
 
-      const elapsedTime = clock.getElapsedTime();
-      const deltaTime = clock.getDelta();
+        // Universe animation
+        universe.material.uniforms.time.value = elapsedTime;
+        universe.rotation.y += 0.0003 * deltaTime * 60;
+        universe.material.uniforms.opacity.value = CONFIG.UNIVERSE_OPACITY + 0.03 * Math.sin(elapsedTime * 0.3);
 
-      universe.material.uniforms.time.value = elapsedTime;
-      universe.rotation.y += 0.0002 * deltaTime * 60;
-      universe.material.uniforms.opacity.value = CONFIG.UNIVERSE_OPACITY + 0.02 * Math.sin(elapsedTime * 0.2);
+        // Root node animation
+        const rootPulse = 1 + 0.1 * Math.sin(elapsedTime * 2.8);
+        rootNode.scale.setScalar(rootPulse);
+        rootAura.scale.setScalar(rootPulse * CONFIG.ROOT_AURA_SIZE_FACTOR * (1 + 0.15 * Math.sin(elapsedTime * 1.8)));
+        rootAura.material.opacity = CONFIG.ROOT_AURA_OPACITY * (0.6 + 0.4 * Math.abs(Math.sin(elapsedTime * 1.8)));
+        rootNode.material.emissiveIntensity = 1.5 + 1.5 * Math.abs(Math.sin(elapsedTime * 2.0 + 0.5)); // Stronger pulse
+        rootNode.rotation.y += 0.012 * deltaTime * 60;
+        rootNode.rotation.x -= 0.008 * deltaTime * 60;
+        rootNode.rotation.z += 0.005 * Math.sin(elapsedTime * 0.3) * deltaTime * 60;
 
-      const rootPulse = 1 + 0.07 * Math.sin(elapsedTime * 2.2);
-      rootNode.scale.setScalar(rootPulse);
-      rootAura.scale.setScalar(rootPulse * CONFIG.ROOT_AURA_SIZE_FACTOR * (1 + 0.1 * Math.sin(elapsedTime * 1.5)));
-      rootAura.material.opacity = CONFIG.ROOT_AURA_OPACITY * (0.7 + 0.3 * Math.abs(Math.sin(elapsedTime * 1.5)));
-      rootNode.material.emissiveIntensity = 1.2 + 0.8 * Math.abs(Math.sin(elapsedTime * 1.5));
-      rootNode.rotation.y += 0.008 * deltaTime * 60;
-      rootNode.rotation.x -= 0.005 * deltaTime * 60;
 
-      const positions = rootParticles.geometry.attributes.position.array;
-      const speeds = rootParticles.userData.speeds;
-      for (let i = 0; i < CONFIG.ROOT_PARTICLE_COUNT; i++) {
-        positions[i * 3] += speeds[i].x * deltaTime;
-        positions[i * 3 + 1] += speeds[i].y * deltaTime;
-        positions[i * 3 + 2] += speeds[i].z * deltaTime;
-        const distSq = positions[i * 3] ** 2 + positions[i * 3 + 1] ** 2 + positions[i * 3 + 2] ** 2;
-        if (distSq > rootParticles.userData.maxDistSq) {
-          positions[i * 3] = (Math.random() - 0.5) * 0.1;
-          positions[i * 3 + 1] = (Math.random() - 0.5) * 0.1;
-          positions[i * 3 + 2] = (Math.random() - 0.5) * 0.1;
+        // Update God Rays light source position (center of screen for root node at 0,0,0)
+        rootNode.getWorldPosition(rootNodeWorldPosition);
+        const screenPos = rootNodeWorldPosition.clone().project(camera);
+        godRaysPass.uniforms.fX.value = (screenPos.x + 1) / 2;
+        godRaysPass.uniforms.fY.value = (screenPos.y + 1) / 2;
+
+
+        // Root particles animation
+        const positions = rootParticles.geometry.attributes.position.array;
+        const speeds = rootParticles.userData.speeds;
+        for (let i = 0; i < CONFIG.ROOT_PARTICLE_COUNT; i++) {
+            positions[i * 3] += speeds[i].x * deltaTime;
+            positions[i * 3 + 1] += speeds[i].y * deltaTime;
+            positions[i * 3 + 2] += speeds[i].z * deltaTime;
+            const distSq = positions[i*3]*positions[i*3] + positions[i*3+1]*positions[i*3+1] + positions[i*3+2]*positions[i*3+2];
+            if (distSq > rootParticles.userData.maxDistSq || Math.random() < 0.0001) { // Small chance to reset early
+                positions[i * 3] = (Math.random() - 0.5) * 0.1;
+                positions[i * 3 + 1] = (Math.random() - 0.5) * 0.1;
+                positions[i * 3 + 2] = (Math.random() - 0.5) * 0.1;
+                speeds[i].set((Math.random() - 0.5), (Math.random() - 0.5), (Math.random() - 0.5))
+                         .normalize().multiplyScalar(CONFIG.ROOT_PARTICLE_SPEED * (0.4 + Math.random() * 0.8));
+            }
         }
-      }
-      rootParticles.geometry.attributes.position.needsUpdate = true;
-      rootParticles.rotation.y += 0.0005 * deltaTime * 60;
+        rootParticles.geometry.attributes.position.needsUpdate = true;
+        rootParticles.rotation.y += 0.0008 * deltaTime * 60;
 
-      blackHoles.forEach((bh, i) => {
-        const data = blackHoleData[i];
-        const bhPulseFactor = 1 + 0.3 * Math.sin(elapsedTime * data.pulseSpeed * 10 + data.pulseOffset);
-        bh.scale.setScalar(data.baseScale * bhPulseFactor);
-        bh.material.emissiveIntensity = 0.8 + 0.7 * Math.abs(Math.sin(elapsedTime * data.pulseSpeed * 8 + data.pulseOffset));
-        data.light.intensity = 0.5 + 0.6 * Math.abs(Math.sin(elapsedTime * data.pulseSpeed * 7 + data.pulseOffset));
-        accretionDisks[i].rotation.z += data.diskRotationSpeed * deltaTime * 60;
 
-        const q = new THREE.Quaternion().setFromAxisAngle(data.orbitAxis, data.orbitSpeed * elapsedTime * 200);
-        bh.position.copy(data.initialPosition).applyQuaternion(q);
-        const radialBreath = 1.0 + Math.sin(elapsedTime * data.pulseSpeed * 2.5 + data.pulseOffset) * 0.015;
-        bh.position.multiplyScalar(radialBreath);
+        // Black holes, accretion disks, jets, and wormroots animation
+        blackHoles.forEach((bh, i) => {
+            const data = blackHoleData[i];
+            const bhPulseFactor = 1 + 0.35 * Math.sin(elapsedTime * data.pulseSpeed * 12 + data.pulseOffset);
+            bh.scale.setScalar(data.baseScale * bhPulseFactor);
+            // bh.material.emissiveIntensity = 0.3 + 0.5 * Math.abs(Math.sin(elapsedTime * data.pulseSpeed * 9 + data.pulseOffset));
+            data.light.intensity = 0.8 + 0.8 * Math.abs(Math.sin(elapsedTime * data.pulseSpeed * 8 + data.pulseOffset));
+            
+            accretionDisks[i].rotation.z += data.diskRotationSpeed * deltaTime * 60;
+            accretionDisks[i].material.uniforms.time.value = elapsedTime + i * 0.1; // Stagger disk animation
 
-        const worm = wormroots[i];
-        const startPoint = rootNode.position;
-        const endPoint = bh.position;
-        const distance = startPoint.distanceTo(endPoint);
-        worm.scale.set(1, 1, distance);
-        worm.position.copy(startPoint);
-        DUMMY_TARGET.position.copy(endPoint);
-        worm.lookAt(endPoint);
-        worm.material.uniforms.time.value = elapsedTime;
-        const wormOpacityPulse = (Math.sin(elapsedTime * 2.0 + i * 0.4) + 1) / 2;
-        worm.material.uniforms.opacity.value = 0.4 + wormOpacityPulse * 0.6;
-      });
+            const q = new THREE.Quaternion().setFromAxisAngle(data.orbitAxis, data.orbitSpeed * elapsedTime * 250);
+            bh.position.copy(data.initialPosition).applyQuaternion(q);
+            const radialBreath = 1.0 + Math.sin(elapsedTime * data.pulseSpeed * 3.0 + data.pulseOffset) * 0.02;
+            bh.position.multiplyScalar(radialBreath);
+            data.light.position.copy(bh.position); // Update light position
 
-      if (starField) {
-        starField.rotation.y += 0.00008 * deltaTime * 60;
-        starField.material.opacity = 0.5 + 0.4 * Math.abs(Math.sin(elapsedTime * 0.15));
-      }
+            // Update wormroot (to central node)
+            const worm = wormroots[i];
+            const startPoint = rootNode.position; 
+            const endPoint = bh.position;
+            const distance = startPoint.distanceTo(endPoint);
+            worm.position.copy(startPoint);
+            worm.lookAt(endPoint);
+            worm.scale.set(1, 1, distance); // Assumes cylinder geometry is along local Z and unit length
+            worm.material.uniforms.time.value = elapsedTime + i * 0.05; // Stagger animation
+            const wormOpacityPulse = (Math.sin(elapsedTime * 2.5 + i * 0.5) + 1) / 2;
+            worm.material.uniforms.opacity.value = 0.5 + wormOpacityPulse * 0.5;
 
-      controls.update();
-      composer.render();
+            // Update BH Jets
+            if (CONFIG.BH_JET_ENABLED && bhJets[i]) {
+                const jetData = bhJets[i];
+                const jetPositions = jetData.geometry.attributes.position.array;
+                const jetOpacities = jetData.geometry.attributes.opacity?.array; // If using per-particle opacity
+
+                for(let k=0; k < jetData.velocities.length; k++) {
+                    jetData.ages[k] += deltaTime;
+                    if (jetData.ages[k] > jetData.lifespans[k]) {
+                        jetPositions[k*3] = 0;
+                        jetPositions[k*3+1] = 0;
+                        jetPositions[k*3+2] = 0;
+                        jetData.ages[k] = 0; // Reset age
+                        // Optionally re-randomize velocity slightly if needed
+                    } else {
+                        jetPositions[k*3] += jetData.velocities[k].x * deltaTime;
+                        jetPositions[k*3+1] += jetData.velocities[k].y * deltaTime;
+                        jetPositions[k*3+2] += jetData.velocities[k].z * deltaTime;
+                    }
+                     // Fade out particles - requires opacity attribute on geometry if per-particle
+                    // For now, global material opacity will handle general jet appearance.
+                    // Can add per-particle later if PointsMaterial allows opacity attribute.
+                }
+                jetData.geometry.attributes.position.needsUpdate = true;
+                jetData.material.opacity = 0.6 + 0.4 * Math.abs(Math.sin(elapsedTime * 5 + i * 0.3)); // Pulsing jet opacity
+            }
+        });
+
+        // Update Inter-BH Wormroots
+        interBHWormroots.forEach(interWormData => {
+            const worm = interWormData.mesh;
+            const sourceBH = blackHoles[interWormData.sourceIndex];
+            const targetBH = blackHoles[interWormData.targetIndex];
+            if (!sourceBH || !targetBH) return;
+
+            const startPoint = sourceBH.position;
+            const endPoint = targetBH.position;
+            const distance = startPoint.distanceTo(endPoint);
+
+            worm.position.copy(startPoint);
+            worm.lookAt(endPoint);
+            worm.scale.set(1, 1, distance);
+            worm.material.uniforms.time.value = elapsedTime + interWormData.sourceIndex * 0.02 + interWormData.targetIndex * 0.03;
+            const wormOpacityPulse = (Math.sin(elapsedTime * 2.2 + (interWormData.sourceIndex + interWormData.targetIndex) * 0.3) + 1) / 2;
+            worm.material.uniforms.opacity.value = 0.3 + wormOpacityPulse * 0.4; // Tend to be fainter
+        });
+
+
+        // Starfield animation
+        if (starField) {
+            starField.rotation.y += 0.00012 * deltaTime * 60;
+            starField.rotation.x += 0.00005 * deltaTime * 60;
+            starField.material.opacity = 0.6 + 0.4 * Math.abs(Math.sin(elapsedTime * 0.2));
+        }
+
+        controls.update();
+        composer.render();
     }
 
     init();
